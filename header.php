@@ -79,7 +79,7 @@ https://templatemo.com/tm-559-zay-shop
                             // SELECT id, login_id, password, full_name, role, gender, phone, email, address, date_of_birht FROM public.users;
                             $sqlSelectUser = "SELECT * FROM public.users WHERE login_id = '$userName' and role = 'admin'";
                             $reUser = pg_query($conn, $sqlSelectUser);
-                            if (pg_numrows($reUser)) {
+                            if (pg_num_rows($reUser)>0) {
                         ?>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
