@@ -10,8 +10,8 @@ include_once('connect.php');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <!-- <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico"> -->
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/templatemo.css">
@@ -89,9 +89,9 @@ https://templatemo.com/tm-559-zay-shop
                                         <li><a class="dropdown-item" href="accountManage.php">Account Management</a></li>
                                         <li><a class="dropdown-item" href="#">Order Management</a></li>
                                         <li><a class="dropdown-item" href="productManage.php">Product Management</a></li>
-                                        <li><a class="dropdown-item" href="#">Shop Management</a></li>
-                                        <li><a class="dropdown-item" href="#">Categories Management</a></li>
-                                        <li><a class="dropdown-item" href="#">Supliers Management</a></li>
+                                        <li><a class="dropdown-item" href="shopManage.php">Shop Management</a></li>
+                                        <li><a class="dropdown-item" href="categoryManage.php">Categories Management</a></li>
+                                        <li><a class="dropdown-item" href="suplierManage.php">Supliers Management</a></li>
                                     </ul>
                                 </li>
                         <?php

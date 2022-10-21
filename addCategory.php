@@ -4,12 +4,12 @@ if (isset($_POST['addCate'])) {
     $cateName = pg_escape_string($conn, $_POST['cateName']);
     $cateDis = pg_escape_string($conn, $_POST['cateDis']);
 
-    $insertCate = "INSERT INTO public.category(c_name, c_discription)
-                        VALUES ('$cateName', '$cateDis')";
+    $insertCate = "INSERT INTO public.category(name, discription)
+	VALUES ('$cateName', '$cateDis')";
     if (pg_query($conn, $insertCate)) {
         echo "<script>
-                window.location = 'index.php?status=insert';
-                </script>";
+                window.location = 'categoryManage.php?status=insert';
+            </script>";
     } else {
         echo "error: " . $insertCate . "<br>" . pg_last_error($conn);
     }

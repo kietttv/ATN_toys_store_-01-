@@ -1,19 +1,21 @@
 <?php
 include('header.php');
 
-$e = true;
 if (isset($_POST['btnLogin'])) {
     $userName = $_POST['username'];
     $pwd = md5($_POST['password']);
     $sql = "SELECT * FROM public.users WHERE login_id = '$userName' and password = '$pwd'";
     $re = pg_query($conn, $sql);
+    $rowUser = pg_fetch_assoc($re);
     if (pg_numrows($re) > 0) {
         $_SESSION['user'] = $userName;
+        $_SESSION['role'] = $rowUser['role'];
         echo "<script>
         window.location = 'index.php?status=login';
         </script>";
-    } else {
         $e = false;
+    } else {
+        $e = true;
     }
 }
 ?>
@@ -24,7 +26,7 @@ if (isset($_POST['btnLogin'])) {
                 <div class="container">
                     <br></br>
                     <h1 class="h3 mb-3 font-weight-normal"> L o g i n</h1>
-                    <?php if ($e == false) { ?>
+                    <?php if (isset($e)) { ?>
                         <div class="container" class="alert alert-danger">
                             <p style="color: red">Wrong username or password</p>
                         </div>

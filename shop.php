@@ -1,9 +1,10 @@
 <?php
 include_once("header.php");
 // SELECT id, name, suplier_id, shop_id, category_id, import_price, sell_price, quantitty, date, discription FROM public.product;
-$sqlProduct = "SELECT * FROM public.product";
+$sqlProduct = "SELECT * FROM public.product WHERE status = 'Available'";
 $reProduct = pg_query($conn, $sqlProduct);
-$rowProduct = pg_fetch_assoc($reProduct);
+$sqlCategory = "SELECT id, name, discription FROM public.category";
+$reCategory = pg_query($conn, $sqlCategory);
 ?>
 
 <!-- Start Content -->
@@ -13,37 +14,11 @@ $rowProduct = pg_fetch_assoc($reProduct);
         <div class="col-lg-3">
             <h1 class="h2 pb-4">Categories</h1>
             <ul class="list-unstyled templatemo-accordion">
-                <li class="pb-3">
-                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                        Gender
-                        <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
-                    </a>
-                    <ul class="collapse show list-unstyled pl-3">
-                        <li><a class="text-decoration-none" href="#">Men</a></li>
-                        <li><a class="text-decoration-none" href="#">Women</a></li>
-                    </ul>
-                </li>
-                <li class="pb-3">
-                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                        Sale
-                        <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
-                    </a>
-                    <ul id="collapseTwo" class="collapse list-unstyled pl-3">
-                        <li><a class="text-decoration-none" href="#">Sport</a></li>
-                        <li><a class="text-decoration-none" href="#">Luxury</a></li>
-                    </ul>
-                </li>
-                <li class="pb-3">
-                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                        Product
-                        <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
-                    </a>
-                    <ul id="collapseThree" class="collapse list-unstyled pl-3">
-                        <li><a class="text-decoration-none" href="#">Bag</a></li>
-                        <li><a class="text-decoration-none" href="#">Sweather</a></li>
-                        <li><a class="text-decoration-none" href="#">Sunglass</a></li>
-                    </ul>
-                </li>
+            <?php
+                while($rowCategory = pg_fetch_assoc($reCategory)){
+            ?>
+                <li class="pb-3"><a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#"><?= $rowCategory['name'] ?></a></li>
+            <?php }?>
             </ul>
         </div>
 
@@ -55,10 +30,10 @@ $rowProduct = pg_fetch_assoc($reProduct);
                             <a class="h3 text-dark text-decoration-none mr-3" href="#">All</a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none mr-3" href="#">Men's</a>
+                            <a class="h3 text-dark text-decoration-none mr-3" href="#">Boy</a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none" href="#">Women's</a>
+                            <a class="h3 text-dark text-decoration-none" href="#">Girl</a>
                         </li>
                     </ul>
                 </div>
@@ -73,44 +48,32 @@ $rowProduct = pg_fetch_assoc($reProduct);
                 </div>
             </div>
             <div class="row">
-                <!-- Product start -->
-                <div class="col-md-4">
-                    <div class="card mb-4 product-wap rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/toy_1.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <!-- <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li> -->
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
+                <?php
+                while ($rowProduct = pg_fetch_assoc($reProduct)) {
+                ?>
+                    <!-- Product start -->
+                    <div class="col-md-4">
+                        <div class="card mb-4 product-wap rounded-0">
+                            <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="assets/img/<?= $rowProduct['image'] ?>">
+                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                    <ul class="list-unstyled">
+                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <a href="shop-single.php?id=<?= $rowProduct['id'] ?>" class="text-decoration-none text-center"><h3><?= $rowProduct['name'] ?></h3></a>
+                                <div class="d-flex">
+                                <p class="text-left mb-0"><?= $rowProduct['sell_price'] ?> VND</p>
+
+                                </div>
+                              
                             </div>
                         </div>
-                        <div class="card-body">
-                            <a href="<?= $rowProduct['id']?>" class="h3 text-decoration-none"><?= $rowProduct['name']?></a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0"><?= $rowProduct['sell_price']?> VND</p>
-                        </div>
                     </div>
-                </div>
-                <!-- Product start -->
+                    <!-- Product start -->
+                <?php } ?>
             </div>
             <div div="row">
                 <ul class="pagination pagination-lg justify-content-end">

@@ -17,9 +17,9 @@ if (isset($_POST['btnRegister'])) {
 
     $sqlCheckSameEmail = "SELECT email FROM public.users WHERE email = '$email'";
     $reCheckSameEmail = pg_query($conn, $sqlCheckSameEmail);
-    if (pg_numrows($reCheckSameUser) > 0) {
+    if (pg_num_rows($reCheckSameUser) > 0) {
         echo "<script>alert('Please enter another Username')</script>";
-    } elseif (pg_numrows($reCheckSameEmail) > 0) {
+    } elseif (pg_num_rows($reCheckSameEmail) > 0) {
         echo "<script>alert('Please enter another Email')</script>";
     } elseif ($pwd1 != $pwd) {
         echo "<script>alert('Confirmation password incorrectly')</script>";
@@ -87,7 +87,6 @@ if (isset($_POST['btnRegister'])) {
                     Male</label>
                 <label class="radio-inline"><input type="radio" name="grpRender" value="Female" id="grpRender" />
                     Female</label>
-
             </div>
         </div>
         <div class="form-group">

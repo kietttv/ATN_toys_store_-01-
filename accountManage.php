@@ -23,6 +23,8 @@ $reAllUser = pg_query($conn, $sqlAllUser)
                         <th scope="col">Email</th>
                         <th scope="col">Address</th>
                         <th scope="col">Date of Birht</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,8 +40,8 @@ $reAllUser = pg_query($conn, $sqlAllUser)
                         <td><?= $rowAllUser['email'] ?></td>
                         <td><?= $rowAllUser['address'] ?></td>
                         <td><?= $rowAllUser['date_of_birht'] ?></td>
-                        <td><a href="updateProduct.php?id=<?= $rowAllUser['id'] ?>" class="btn btn-success rounded-pill"> Update </a></td>
-                        <td><a href="delete.phpProduct?id=<?= $rowAllUser['id'] ?>" class="btn btn-success rounded-pill"> Delete </a></td>
+                        <td><a href="#?id=<?= $rowAllUser['id'] ?>" class="btn btn-success rounded-pill"> Update </a></td>
+                        <td><a href="#?id=<?= $rowAllUser['id'] ?>" class="btn btn-success rounded-pill"> Delete </a></td>
                     </tr>
                     <?php }?>
                 </tbody>
