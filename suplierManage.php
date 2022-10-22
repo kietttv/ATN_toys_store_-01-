@@ -8,7 +8,7 @@ $reSuplier = pg_query($conn, $sqlSuplier);
     <div class="container mb-3">
         <div className="page-heading pb-2 mt-4 mb-2 ">
             <h3>Suplier Manager</h3>
-            <a href="addCategory.php"><button type="button" class="btn btn-outline-success">Insert</button></a>
+            <a href="addSuplier.php"><button type="button" class="btn btn-outline-success">Insert</button></a>
         </div>
         <div class="page-content">
             <div class="btn-group" role="group" aria-label="Basic outlined example"></div>
