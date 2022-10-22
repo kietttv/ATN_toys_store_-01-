@@ -179,6 +179,7 @@ if (isset($_GET['id'])) {
         </form>
     </div>
 </div>
+
 <?php
 include_once('footer.php');
 ?>

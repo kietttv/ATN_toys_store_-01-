@@ -1,5 +1,29 @@
 <?php
 include_once("header.php");
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $selectProduct = "SELECT p.id, p.name, sup.name as suplier_name, s.adress as shop_address, c.name as category_name, p.import_price, p.sell_price, p.quantitty, p.date, p.discription, p.image, p.status
+	FROM public.product p, public.suplier sup, public.shop s, public.category c 
+	WHERE p.suplier_id = sup.id and p.shop_id = s.id and p.category_id = c.id and p.id = '$id'";
+    $reSelectProduct = pg_query($conn, $selectProduct);
+    $rowSelectProduct = pg_fetch_assoc($reSelectProduct);
+    if(isset($_POST['submit'])){
+        $userId = $rowUser['id'];
+        $prodQuanity = pg_escape_string($conn, $_POST['product-quanity']);
+        $productId = $rowSelectProduct['id'];
+        $date = date("Y/m/d");
+        $sqlInsertCart = "INSERT INTO public.cart(user_id, product_id, quantity, date) VALUES ('$userId', '$productId', '$prodQuanity', '$date')";
+        if (pg_query($conn, $sqlInsertCart)) {
+            echo "<script>
+            window.location = 'cart.php?status=insert';
+        </script>";
+        } else {
+            echo "error: " . $sqlInsertCart . "<br>" . pg_last_error($conn);
+        }
+        // "cart.php?id=<?= $rowUser['id']
+        // echo($prodQuanity);
+    }
+}
 ?>
 
 <!-- Open Content -->
@@ -8,107 +32,15 @@ include_once("header.php");
         <div class="row">
             <div class="col-lg-5 mt-5">
                 <div class="card mb-3">
-                    <img class="card-img img-fluid" src="assets/img/" alt="Card image cap" id="product-detail">
-                </div>
-                <div class="row">
-                    <!--Start Controls-->
-                    <div class="col-1 align-self-center">
-                        <a href="#multi-item-example" role="button" data-bs-slide="prev">
-                            <i class="text-dark fas fa-chevron-left"></i>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </div>
-                    <!--End Controls-->
-                    <!--Start Carousel Wrapper-->
-                    <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item" data-bs-ride="carousel">
-                        <!--Start Slides-->
-                        <div class="carousel-inner product-links-wap" role="listbox">
-
-                            <!--First slide-->
-                            <div class="carousel-item active">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/" alt="Product Image 1">
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/" alt="Product Image 2">
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/" alt="Product Image 3">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/.First slide-->
-
-                            <!--Second slide-->
-                            <div class="carousel-item">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/" alt="Product Image 4">
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/" alt="Product Image 5">
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/" alt="Product Image 6">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/.Second slide-->
-
-                            <!--Third slide-->
-                            <div class="carousel-item">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/" alt="Product Image 7">
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/" alt="Product Image 8">
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/" alt="Product Image 9">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/.Third slide-->
-                        </div>
-                        <!--End Slides-->
-                    </div>
-                    <!--End Carousel Wrapper-->
-                    <!--Start Controls-->
-                    <div class="col-1 align-self-center">
-                        <a href="#multi-item-example" role="button" data-bs-slide="next">
-                            <i class="text-dark fas fa-chevron-right"></i>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                    <!--End Controls-->
+                    <img class="card-img img-fluid" src="assets/img/<?=$rowSelectProduct['image'] ?>" alt="Card image cap" id="product-detail">
                 </div>
             </div>
             <!-- col end -->
             <div class="col-lg-7 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h1 class="h2">Active Wear</h1>
-                        <p class="h3 py-2">$25.00</p>
+                        <h1 class="h2"><?=$rowSelectProduct['name'] ?></h1>
+                        <p class="h3 py-2"><?=$rowSelectProduct['sell_price']?> VND</p>
                         <!-- <p class="py-2">
                             <i class="fa fa-star text-warning"></i>
                             <i class="fa fa-star text-warning"></i>
@@ -119,49 +51,39 @@ include_once("header.php");
                         </p> -->
                         <ul class="list-inline">
                             <li class="list-inline-item">
-                                <h6>Brand:</h6>
+                                <h6>Categoty: </h6>
                             </li>
                             <li class="list-inline-item">
-                                <p class="text-muted"><strong>Easy Wear</strong></p>
+                                <p><?=$rowSelectProduct['category_name']?></p>
                             </li>
                         </ul>
 
                         <h6>Description:</h6>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temp incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse. Donec condimentum elementum convallis. Nunc sed orci a diam ultrices aliquet interdum quis nulla.</p>
-                        <ul class="list-inline">
+                        <p><?=$rowSelectProduct['discription'] ?></p>
+                        <!-- <ul class="list-inline">
                             <li class="list-inline-item">
                                 <h6>Avaliable Color :</h6>
                             </li>
                             <li class="list-inline-item">
                                 <p class="text-muted"><strong>White / Black</strong></p>
                             </li>
+                        </ul> -->
+
+                        <h6>Suplier:</h6>
+                        <p><?=$rowSelectProduct['suplier_name'] ?></p>
+
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6>Stock: </h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p><?=$rowSelectProduct['quantitty']?></p>
+                            </li>
                         </ul>
 
-                        <h6>Specification:</h6>
-                        <ul class="list-unstyled pb-3">
-                            <li>Lorem ipsum dolor sit</li>
-                            <li>Amet, consectetur</li>
-                            <li>Adipiscing elit,set</li>
-                            <li>Duis aute irure</li>
-                            <li>Ut enim ad minim</li>
-                            <li>Dolore magna aliqua</li>
-                            <li>Excepteur sint</li>
-                        </ul>
-
-                        <form action="" method="GET">
+                        <form action="" method="POST">
                             <input type="hidden" name="product-title" value="Activewear">
                             <div class="row">
-                                <!-- <div class="col-auto">
-                                    <ul class="list-inline pb-3">
-                                        <li class="list-inline-item">Size :
-                                            <input type="hidden" name="product-size" id="product-size" value="S">
-                                        </li>
-                                        <li class="list-inline-item"><span class="btn btn-success btn-size">S</span></li>
-                                        <li class="list-inline-item"><span class="btn btn-success btn-size">M</span></li>
-                                        <li class="list-inline-item"><span class="btn btn-success btn-size">L</span></li>
-                                        <li class="list-inline-item"><span class="btn btn-success btn-size">XL</span></li>
-                                    </ul>
-                                </div> -->
                                 <div class="col-auto">
                                     <ul class="list-inline pb-3">
                                         <li class="list-inline-item text-right">
@@ -175,9 +97,9 @@ include_once("header.php");
                                 </div>
                             </div>
                             <div class="row pb-3">
-                                <div class="col d-grid">
+                                <!-- <div class="col d-grid">
                                     <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
-                                </div>
+                                </div> -->
                                 <div class="col d-grid">
                                     <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
                                 </div>

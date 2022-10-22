@@ -55,12 +55,13 @@ $reCategory = pg_query($conn, $sqlCategory);
                     <div class="col-md-4">
                         <div class="card mb-4 product-wap rounded-0">
                             <div class="card rounded-0">
-                                <img class="card-img rounded-0 img-fluid" src="assets/img/<?= $rowProduct['image'] ?>">
-                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                    <ul class="list-unstyled">
+                                <a href="shop-single.php?id=<?= $rowProduct['id'] ?>"><img class="card-img rounded-0 img-fluid" src="assets/img/<?= $rowProduct['image'] ?>"></a>
+                                
+                                <!-- <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"> -->
+                                    <!-- <ul class="list-unstyled">
                                         <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                    </ul>
-                                </div>
+                                    </ul> -->
+                                <!-- </div> -->
                             </div>
                             <div class="card-body">
                                 <a href="shop-single.php?id=<?= $rowProduct['id'] ?>" class="text-decoration-none text-center"><h3><?= $rowProduct['name'] ?></h3></a>

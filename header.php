@@ -20,13 +20,7 @@ include_once('connect.php');
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-    <!--
-    
-TemplateMo 559 Zay Shop
-
-https://templatemo.com/tm-559-zay-shop
-
--->
+    <!--TemplateMo 559 Zay Shophttps://templatemo.com/tm-559-zay-shop-->
 </head>
 
 <body>
@@ -75,11 +69,12 @@ https://templatemo.com/tm-559-zay-shop
                         </li>
                         <?php
                         if (isset($_SESSION['user'])) {
-                            $userName = $_SESSION['user'];//=
+                            $userName = $_SESSION['user'];
                             // SELECT id, login_id, password, full_name, role, gender, phone, email, address, date_of_birht FROM public.users;
-                            $sqlSelectUser = "SELECT * FROM public.users WHERE login_id = '$userName' and role = 'admin'";
+                            $sqlSelectUser = "SELECT * FROM public.users WHERE login_id = '$userName'";
                             $reUser = pg_query($conn, $sqlSelectUser);
-                            if (pg_num_rows($reUser)>0) {
+                            $rowUser = pg_fetch_assoc($reUser);
+                            if ($rowUser['role'] == 'admin') {
                         ?>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -108,11 +103,11 @@ https://templatemo.com/tm-559-zay-shop
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
                         </div>
-                    </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                        <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                            <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                        </div>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                    <a class="nav-icon position-relative text-decoration-none" href="cart.php">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
                     </a>
