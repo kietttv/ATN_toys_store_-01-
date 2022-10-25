@@ -22,7 +22,7 @@ if (isset($_POST['addProduct'])) {
                 window.location = 'productManage.php?status=insert';
             </script>";
     } else {
-        echo "error: " . $insertCate . "<br>" . pg_last_error($conn);
+        echo "error: " . $insertProduct . "<br>" . pg_last_error($conn);
     }
 
     // debug

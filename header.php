@@ -105,7 +105,11 @@ include_once('connect.php');
                         </div>
                         <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                             <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                        </div>
+                        </a>
+                    </div>
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
+                        data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="cart.php">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
@@ -118,7 +122,9 @@ include_once('connect.php');
                             <?= $_SESSION['user'] ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><p class="dropdown-item"></p></li>
+                            <li>
+                                <p class="dropdown-item"></p>
+                            </li>
                             <li><a class="dropdown-item" href="#">Change Password</a></li>
                             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                         </ul>
@@ -143,10 +149,10 @@ include_once('connect.php');
             <div class="w-100 pt-1 mb-5 text-right">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+            <form action="shop.php" method="POST" class="modal-content modal-body border-0 p-0">
                 <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
-                    <button type="submit" class="input-group-text bg-success text-light">
+                    <input type="text" class="form-control" id="inputModalSearch" name="inputModalSearch" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light" name="btnSearch">
                         <i class="fa fa-fw fa-search text-white"></i>
                     </button>
                 </div>

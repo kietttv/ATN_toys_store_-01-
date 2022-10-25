@@ -1,12 +1,22 @@
 <?php
 include_once("header.php");
 // SELECT id, name, suplier_id, shop_id, category_id, import_price, sell_price, quantitty, date, discription FROM public.product;
-$sqlProduct = "SELECT * FROM public.product WHERE status = 'Available'";
+// SELECT id, name, suplier_id, shop_id, category_id, import_price, sell_price, quantitty, date, discription, image, status
+// FROM public.product WHERE name LIKE '%%' and status = 'Available';
+
+if(isset($_POST['btnSearch'])){
+    $search = $_POST['inputModalSearch'];
+    $search = preg_replace("#[^0-9a-z]i#","", $search);
+    echo"[$search]";
+    $sqlProduct = "SELECT id, name, suplier_id, shop_id, category_id, import_price, sell_price, quantitty, date, discription, image, status
+    FROM public.product WHERE name LIKE '%$search%' and status = 'Available'";
+}else{
+    $sqlProduct = "SELECT * FROM public.product WHERE status = 'Available'";
+}
 $reProduct = pg_query($conn, $sqlProduct);
 $sqlCategory = "SELECT id, name, discription FROM public.category";
 $reCategory = pg_query($conn, $sqlCategory);
 ?>
-
 <!-- Start Content -->
 <div class="container py-5">
     <div class="row">
@@ -21,7 +31,6 @@ $reCategory = pg_query($conn, $sqlCategory);
             <?php }?>
             </ul>
         </div>
-
         <div class="col-lg-9">
             <div class="row">
                 <div class="col-md-6">
