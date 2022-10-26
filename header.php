@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once('connect.php');
+$count = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,6 +75,12 @@ include_once('connect.php');
                             $sqlSelectUser = "SELECT * FROM public.users WHERE login_id = '$userName'";
                             $reUser = pg_query($conn, $sqlSelectUser);
                             $rowUser = pg_fetch_assoc($reUser);
+
+                            $userId = $rowUser['id'];
+                            $sqlSelectCart = "SELECT product_id FROM cart WHERE user_id = '$userId'";
+                            $reCart = pg_query($conn, $sqlSelectCart);
+                            $count = pg_num_rows($reCart);
+
                             if ($rowUser['role'] == 'admin') {
                         ?>
                                 <li class="nav-item dropdown">
@@ -82,7 +89,7 @@ include_once('connect.php');
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <li><a class="dropdown-item" href="accountManage.php">Account Management</a></li>
-                                        <li><a class="dropdown-item" href="#">Order Management</a></li>
+                                        <li><a class="dropdown-item" href="orderManage.php">Order Management</a></li>
                                         <li><a class="dropdown-item" href="productManage.php">Product Management</a></li>
                                         <li><a class="dropdown-item" href="shopManage.php">Shop Management</a></li>
                                         <li><a class="dropdown-item" href="categoryManage.php">Categories Management</a></li>
@@ -113,7 +120,7 @@ include_once('connect.php');
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="cart.php">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"><?=$count?></span>
                     </a>
                     <?php
                     if (isset($_SESSION['user'])) { ?>
@@ -125,7 +132,7 @@ include_once('connect.php');
                             <li>
                                 <p class="dropdown-item"></p>
                             </li>
-                            <li><a class="dropdown-item" href="#">Change Password</a></li>
+                            <li><a class="dropdown-item" href="#">Order history</a></li>
                             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                         </ul>
                     <?php } else { ?>

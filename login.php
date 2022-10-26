@@ -7,7 +7,7 @@ if (isset($_POST['btnLogin'])) {
     $sql = "SELECT * FROM public.users WHERE login_id = '$userName' and password = '$pwd'";
     $re = pg_query($conn, $sql);
     $rowUser = pg_fetch_assoc($re);
-    if (pg_numrows($re) > 0) {
+    if (pg_num_rows($re) > 0) {
         $_SESSION['user'] = $userName;
         $_SESSION['role'] = $rowUser['role'];
         echo "<script>

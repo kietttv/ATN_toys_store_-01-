@@ -2,7 +2,7 @@
 include_once('header.php');
 if (isset($_SESSION['user'])) {
     $id = $rowUser['id'];
-    $sqlSelectCart = "SELECT p.name, p.image, p.sell_price, c.quantity 
+    $sqlSelectCart = "SELECT c.id, p.name, p.image, p.sell_price, c.quantity 
         FROM public.cart c, public.product p WHERE c.product_id = p.id and user_id = $id";
     $reCart = pg_query($conn, $sqlSelectCart);
     // $rowCart = pg_fetch_assoc($reCart);
@@ -37,7 +37,7 @@ if (isset($_SESSION['user'])) {
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                                 <?php ?>
-                                                <input id="form1" min="0" name="quantity" value="<?= $rowCart['quantity'] ?>" type="number" class="form-control form-control-sm" />
+                                                <input id="form1" min="0" name="quantity" value="<?= $rowCart['quantity'] ?>" type="number" class="form-control form-control-sm" readonly/>
                                             </div>
                                             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                                 <h6 class="mb-0"><span>&#8363;</span><?= $rowCart['quantity'] ?> * <?= $rowCart['sell_price'] ?></h6>
@@ -46,7 +46,7 @@ if (isset($_SESSION['user'])) {
                                             $sum = $sum + $rowCart['quantity'] * $rowCart['sell_price'];
                                             ?>
                                             <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                <a href="delete_cart.php?id=<?php ?>" class="text-muted text-decoration-none">x</a>
+                                                <a href="deleteCart.php?id=<?=$rowCart['id']?>" class="text-muted text-decoration-none">x</a>
                                             </div>
                                         </div>
                                     <?php
@@ -69,7 +69,7 @@ if (isset($_SESSION['user'])) {
                                         <h5><span>&#8363;</span> <?= $sum ?></h5>
                                     </div>
 
-                                    <a href="order.php"><button type="button" class="btn btn-success btn-block btn-lg" data-mdb-ripple-color="dark">Payment</button></a>
+                                    <a href="createOrder.php"><button type="button" class="btn btn-success btn-block btn-lg" data-mdb-ripple-color="dark">Payment</button></a>
 
                                 </div>
                             </div>
