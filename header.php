@@ -132,7 +132,7 @@ $count = 0;
                             <li>
                                 <p class="dropdown-item"></p>
                             </li>
-                            <li><a class="dropdown-item" href="#">Order history</a></li>
+                            <li><a class="dropdown-item" href="orderHistory.php">Order history</a></li>
                             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                         </ul>
                     <?php } else { ?>

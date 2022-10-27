@@ -1,7 +1,8 @@
 <?php
 include_once('header.php');
+$userId = $rowUser['id'];
 $sqlOrder = "SELECT id, user_id, order_date, delivery_date, address, status, payment, phone, customer_name
-                FROM public.orders";
+                FROM public.orders WHERE user_id = '$userId'";
 $reOrder = pg_query($conn, $sqlOrder)
 ?>
 <br>

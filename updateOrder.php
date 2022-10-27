@@ -3,12 +3,16 @@ include_once('header.php');
 if (isset($_GET['id'])) {
     $orderId = $_GET['id'];
     $userId = $rowUser['id'];
-    $selectOrder = "SELECT o.customer_name, o.phone, o.address, p.name, p.sell_price, od.quantity, p.image, o.payment, o.status
-                    FROM  public.orders o, public.order_detail od,  public.product p
-                    WHERE user_id = '$userId' and od.product_id = p.id and o.id = '$orderId'";
+    $selectOrder = "SELECT id, user_id, order_date, delivery_date, address, status, payment, phone, customer_name
+	                FROM public.orders 
+                    WHERE id = '$orderId'";
     $reOrder = pg_query($conn, $selectOrder);
-    $reOrder1 = pg_query($conn, $selectOrder);
     $rowOrder = pg_fetch_assoc($reOrder);
+
+    $selectOrderDetail = "SELECT p.name as product_name, p.sell_price, od.quantity, p.image
+                        FROM  public.orders o, public.order_detail od,  public.product p
+                        WHERE od.order_id = o.id and od.product_id = p.id and o.id = '$orderId'";
+    $reOrderDetail = pg_query($conn, $selectOrderDetail);
 
     if(isset($_POST['order'])){
         $today = date("Y/m/d");
@@ -32,7 +36,7 @@ if (isset($_GET['id'])) {
     }
 }
 ?>
-
+<!-- <br /><b>Notice</b>:  Undefined variable: rowOrder in <b>C:\xampp\htdocs\ATN_toys_store\updateOrder.php</b> on line <b>44</b><br /><br /><b>Notice</b>:  Trying to access array offset on value of type null in <b>C:\xampp\htdocs\ATN_toys_store\updateOrder.php</b> on line <b>44</b><br /> -->
 <div class="container py-5">
     <div class="col-md-6 m-auto text-center">
         <br>
@@ -54,7 +58,7 @@ if (isset($_GET['id'])) {
             </div>
             <div class="mb-3">
                 <label for="inputmessage">Address</label>
-                <textarea class="form-control mt-1" id="address" name="address" placeholder="Address..." rows="3" required><?= $rowOrder['address'] ?></textarea>
+                <textarea class="form-control mt-1" id="address" name="address" placeholder="Address..." rows="3" required><?=$rowOrder['address'] ?></textarea>
                 <div class="valid-feedback">Correct</div>
                 <div class="invalid-feedback">Wrong</div>
             </div>
@@ -70,13 +74,13 @@ if (isset($_GET['id'])) {
                     </thead>
                     <tbody>
                         <?php
-                        while ($rowOrder1 = pg_fetch_assoc($reOrder1)) {
+                        while ($rowOrderDetail = pg_fetch_assoc($reOrderDetail)) {
                         ?>
                             <tr>
-                                <td><?= $rowOrder1['name'] ?></td>
-                                <td><?= $rowOrder1['sell_price'] ?></td>
-                                <td><?= $rowOrder1['quantity'] ?></td>
-                                <td><img src="./assets/img/<?= $rowOrder1['image'] ?>" width="100px" height="100px" alt="img"></td>
+                                <td><?= $rowOrderDetail['product_name'] ?></td>
+                                <td><?= $rowOrderDetail['sell_price'] ?></td>
+                                <td><?= $rowOrderDetail['quantity'] ?></td>
+                                <td><img src="./assets/img/<?=$rowOrderDetail['image']?>" width="100px" height="100px" alt="img"></td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -95,15 +99,15 @@ if (isset($_GET['id'])) {
                         <label class="radio-inline"><input type="radio" name="grpRender" value="Delivering" id="grpRender" />Delivering</label>
                         <label class="radio-inline"><input type="radio" name="grpRender" value="Delivered" id="grpRender" checked="checked" />Delivered</label>
                     <?php } else { ?>
-                        <label class="radio-inline"><input type="radio" name="grpRender" value="Available" id="grpRender" />Preparing</label>
-                        <label class="radio-inline"><input type="radio" name="grpRender" value="Delivering" id="grpRender" checked="checked" />Delivering</label>
-                        <label class="radio-inline"><input type="radio" name="grpRender" value="Delivering" id="grpRender" />Delivered</label>
+                        <label class="radio-inline"><input type="radio" name="grpRender" value="Available" id="grpRender" checked="checked"/>Preparing</label>
+                        <label class="radio-inline"><input type="radio" name="grpRender" value="Delivering" id="grpRender"/>Delivering</label>
+                        <label class="radio-inline"><input type="radio" name="grpRender" value="Delivering" id="grpRender"/>Delivered</label>
                     <?php } ?>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="inputsubject">Total Payment</label>
-                <input type="number" name="totalPayment" id="totalPayment" value="<?= $rowOrder['payment'] ?>" class="form-control" placeholder="Total Payment..." readonly />
+                <input type="number" name="totalPayment" id="totalPayment" value="<?=$rowOrder['payment'] ?>" class="form-control" placeholder="Total Payment..." readonly />
             </div>
             <div class="row">
                 <div class="col text-end mt-2">
