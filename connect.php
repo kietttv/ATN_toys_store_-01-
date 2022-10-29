@@ -1,15 +1,4 @@
 <?php
-// //Connect My SQL
-//     $server = "localhost";
-//     $username ="root";
-//     $password = "";
-//     $db = "";
-//     $conn = mysqli_connect($server,$username,$password,$db);
-//     if($conn->connect_error){
-//         die("Failed ".$conn->connect_error);
-//     }
-
-//Connect Portgresql(01)
 $host = 'ec2-23-20-140-229.compute-1.amazonaws.com';
 $dbname = 'dbuk7leqe0pfgk';
 $user = 'ktkmmdvcayiixo';
