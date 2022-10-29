@@ -6,10 +6,10 @@ $reAllUser = pg_query($conn, $sqlAllUser)
 <br>
 <div id="main">
     <div class="container mb-3">
-        <div className="page-heading pb-2 mt-4 mb-2 ">
+        <!-- <div className="page-heading pb-2 mt-4 mb-2 ">
             <h3>Account Manager</h3>
             <a href="insert.php"><button type="button" class="btn btn-outline-success">Insert</button></a>
-        </div>
+        </div> -->
         <div class="page-content">
             <div class="btn-group" role="group" aria-label="Basic outlined example"></div>
             <table class="table table-striped">
@@ -23,8 +23,8 @@ $reAllUser = pg_query($conn, $sqlAllUser)
                         <th scope="col">Email</th>
                         <th scope="col">Address</th>
                         <th scope="col">Date of Birht</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <!-- <th scope="col"></th>
+                        <th scope="col"></th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -40,8 +40,8 @@ $reAllUser = pg_query($conn, $sqlAllUser)
                         <td><?= $rowAllUser['email'] ?></td>
                         <td><?= $rowAllUser['address'] ?></td>
                         <td><?= $rowAllUser['date_of_birht'] ?></td>
-                        <td><a href="#?id=<?= $rowAllUser['id'] ?>" class="btn btn-success rounded-pill"> Update </a></td>
-                        <td><a href="#?id=<?= $rowAllUser['id'] ?>" class="btn btn-success rounded-pill"> Delete </a></td>
+                        <!-- <td><a href="#?id=<?///= $rowAllUser['id'] ?>" class="btn btn-success rounded-pill"> Update </a></td>
+                        <td><a href="#?id=<?//= $rowAllUser['id'] ?>" class="btn btn-success rounded-pill"> Delete </a></td> -->
                     </tr>
                     <?php }?>
                 </tbody>
