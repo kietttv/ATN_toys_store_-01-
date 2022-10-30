@@ -30,9 +30,17 @@ $reSuplier = pg_query($conn, $sqlSuplier);
                         <td><?= $rowSuplier['name'] ?></td>
                         <td><?= $rowSuplier['discription'] ?></td>
                         <td><?= $rowSuplier['address'] ?></td>
-                        <td><a href="updateProduct.php?id=<?= $rowSuplier['id'] ?>" class="btn btn-success rounded-pill"> Update </a></td>
-                        <td><a href="delete.phpProduct?id=<?= $rowSuplier['id'] ?>" class="btn btn-success rounded-pill"> Delete </a></td>
-                    </tr>
+                        <td><a href="updateSuplier.php?id=<?= $rowSuplier['id'] ?>" class="btn btn-success rounded-pill"> Update </a></td>
+                        <td><a onclick="deletePost(<?= $rowSuplier['id'] ?>)" href="#?id=<?= $rowSuplier['id'] ?>" class="btn btn-success rounded-pill"> Delete </a></td>
+                        </tr>
+                        <script>
+                            function deletePost(id) {
+                                if (confirm('Do you want to delete ' + '[' + id + ']'+ '?') == true) {
+                                    window.location.href = 'deleteSuplier.php?id=' + id;
+                                    // window.location.href = "index.php";
+                                }
+                            }
+                        </script>
                     <?php }?>
                 </tbody>
             </table>
